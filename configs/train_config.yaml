@@ -1,0 +1,22 @@
+data:
+  train_csv: data/processed/train.csv
+  val_csv: data/processed/val.csv
+  test_csv: data/processed/test.csv
+  image_dir: data/processed/images
+  image_size: 224
+  batch_size: 32
+  num_workers: 4
+
+training:
+  epochs: 30
+  learning_rate: 0.0003
+  weight_decay: 0.0001
+  early_stopping_patience: 5
+  class_weighting: true
+
+model:
+  freeze_backbone_epochs: 5
+
+output:
+  checkpoint_dir: models/
+  log_dir: logs/
