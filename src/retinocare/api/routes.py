@@ -15,7 +15,7 @@ from src.retinocare.data.transforms import get_eval_transforms
 router = APIRouter()
 
 SEVERITY_LABELS = ["No DR", "Mild", "Moderate", "Severe", "Proliferative DR"]
-CHECKPOINT_PATH = "models/resnet18_transfer.pt"
+CHECKPOINT_PATH = "models/resnet18.pt"
 KNOWLEDGE_BASE_DIR = "knowledge_base/guidelines"
 
 
