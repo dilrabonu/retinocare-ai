@@ -44,8 +44,8 @@ def health():
 
 @router.post("/predict", response_model=PredictionResponse)
 async def predict(file: UploadFile):
-    if file.content_type not in ("image/png", "image/jpeg", "image/jpg"):
-        raise HTTPException(status_code=400, detail="Upload a PNG or JPEG image.")
+    if file.content_type not in ("image/png", "image/jpeg", "image/jpg",  "image/webp"):
+        raise HTTPException(status_code=400, detail="Upload a PNG, JPEG or WebP image.")
 
     image_bytes = await file.read()
     try:

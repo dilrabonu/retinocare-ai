@@ -31,7 +31,7 @@ if not backend_ok:
         icon="⚠️",
     )
 
-uploaded_file = st.file_uploader("Upload a fundus image", type=["png", "jpg", "jpeg"])
+uploaded_file = st.file_uploader("Upload a fundus image", type=["png", "jpg", "jpeg", "webp"])
 
 if uploaded_file:
     st.image(uploaded_file, width=300)
