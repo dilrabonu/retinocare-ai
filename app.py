@@ -1,7 +1,7 @@
 """Lightweight Streamlit demo UI -- for mentor/portfolio presentations.
 
 Run:
-   app.py
+   streamlit run app.py
 
 Requires the FastAPI backend running separately:
     uvicorn src.retinocare.api.main:app --reload
