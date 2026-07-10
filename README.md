@@ -33,18 +33,32 @@ Note how the agent explicitly flags when its confidence is only moderate ("shoul
 ## Architecture
 
 Fundus image
+
 │
+
 ▼
+
 PyTorch classifier (ResNet18, fine-tuned)  ──►  severity (0–4) + confidence score
+
 │
+
 ▼
+
 Hybrid RAG retrieval (ChromaDB dense + BM25 sparse, fused via Reciprocal Rank Fusion)
+
 │
+
+
 ▼
+
 Claude API  ──►  grounded, cited recommendation
+
 │
+
 ▼
+
 Fail-closed disclaimer enforcement  ──►  final response (FastAPI / Streamlit)
+
 
 Full pipeline: `src/retinocare/` — classification (`models/`), retrieval + agent (`agents/`), API (`api/`).
 
@@ -169,4 +183,4 @@ pytest tests/ -v
 
 ## License
 
-MIT — see [`LICENSE`](LICENSE)
+MIT 
