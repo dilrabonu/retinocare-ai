@@ -32,8 +32,16 @@ Note how the agent explicitly flags when its confidence is only moderate ("shoul
 
 ## Architecture
 
-![alt text](image.png)
-
-![alt text](image-1.png)
-
-![alt text](image-2.png)
+Fundus image
+│
+▼
+PyTorch classifier (ResNet18, fine-tuned)  ──►  severity (0–4) + confidence score
+│
+▼
+Hybrid RAG retrieval (ChromaDB dense + BM25 sparse, fused via Reciprocal Rank Fusion)
+│
+▼
+Claude API  ──►  grounded, cited recommendation
+│
+▼
+Fail-closed disclaimer enforcement  ──►  final response (FastAPI / Streamlit)
