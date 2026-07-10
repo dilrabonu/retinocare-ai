@@ -112,3 +112,61 @@ retinocare-ai/
 ├── README.md
 └── ...
 ```
+---
+
+## Setup
+
+```bash
+git clone https://github.com/dilrabonu/retinocare-ai.git
+cd retinocare-ai
+
+conda create -n retinocare-ai python=3.11 -y
+conda activate retinocare-ai
+pip install -r requirements.txt
+
+cp .env.example .env   # then add your ANTHROPIC_API_KEY
+```
+
+**Get the dataset and train:**
+```bash
+# See notebooks/01_eda.ipynb for the full download + preprocessing walkthrough
+python -m src.retinocare.models.train --config configs/train_config.yaml --model resnet18
+```
+
+**Run the full application** (two terminals):
+```bash
+uvicorn src.retinocare.api.main:app --reload      # backend, port 8000
+streamlit run streamlit_app/app.py                 # frontend, port 8501
+```
+
+**Run tests:**
+```bash
+pytest tests/ -v
+```
+
+---
+
+## Results summary
+
+- Trained and compared 3 model architectures with a rigorous, config-driven pipeline
+- Achieved 0.80 weighted F1 (ResNet18, production model) on a 5-class severity task with real clinical imbalance
+- Built a hybrid dense+sparse RAG retrieval system with measurable, tested safety guarantees
+- Delivered a working end-to-end demo: image upload → classification → grounded recommendation → mandatory disclaimer, in under 2 seconds
+
+---
+
+## Roadmap
+
+- [x] **Phase 1**: Classification model comparison + RAG agent (this README)
+- [ ] **Phase 2**: Voice agent layer (LiveKit STT/TTS)
+- [ ] **Phase 3**: Multi-agent orchestration (LangGraph: triage → referral → scheduling)
+
+---
+
+## Author
+
+**Dilrabo Khidirova** — Senior Lecturer (Machine Learning), IT Park University, Fergana, Uzbekistan. ML Engineer candidate with a background in production ML pipelines, computer vision, and applied NLP.
+
+## License
+
+MIT — see [`LICENSE`](LICENSE)
