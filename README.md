@@ -92,3 +92,23 @@ This isn't a bolt-on disclaimer — it's enforced in code and covered by tests:
 ---
 
 ## Repository structure
+
+```
+retinocare-ai/
+├── data/                    # Dataset (unzipped)
+├── models/                  # Trained models (.pth)
+├── knowledge_base/          # Guidelines for RAG
+│   └── guidelines/
+├── src/retinocare/
+│   ├── models/            # Training scripts
+│   ├── agents/            # RAG + LLM integration
+│   ├── api/               # FastAPI server
+│   └── streamlit_app.py   # Web UI
+├── tests/
+├── docs/
+├── Dockerfile
+├── docker-compose.yml
+├── pyproject.toml
+├── README.md
+└── ...
+```
