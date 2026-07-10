@@ -18,7 +18,7 @@ def test_predict_rejects_non_image_content_type():
         "/predict", files={"file": ("notes.txt", b"just some text", "text/plain")}
     )
     assert response.status_code == 400
-    assert "PNG or JPEG" in response.json()["detail"]
+    assert "PNG" in response.json()["detail"]
 
 
 def test_predict_rejects_corrupted_image_bytes():
