@@ -16,7 +16,7 @@
 
 ## Live demo
 
-![Diabetic Retinopathy Screening Assistant](D:\Python\retinocare-ai\image-1.png)
+![Diabetic Retinopathy Screening Assistant](docs/image.png)
 
 Given a fundus image, the system returns a severity classification, a confidence score, and a guideline-grounded recommendation with citations:
 
@@ -32,7 +32,7 @@ Note how the agent explicitly flags when its confidence is only moderate ("shoul
 
 ## Architecture
 
-
+![alt text](image.png)
 
 ![alt text](image-1.png)
 
