@@ -3,8 +3,7 @@
 
 **An end-to-end diabetic retinopathy screening agent** combining a PyTorch classification pipeline with a retrieval-augmented (RAG) recommendation system — built as a production-oriented portfolio project demonstrating applied ML engineering and agentic AI system design.
 
-> ⚠️ **Not a diagnostic tool.** RetinoCare AI is a screening/triage support system. It never issues a diagnosis and always directs the user to consult a qualified ophthalmologist. This principle is enforced in code, not just documentation — see [Safety Design](#safety-design) below.
-
+> ⚠️ **Not a diagnostic tool.** RetinoCare AI is a screening/triage support system. It never issues a diagnosis and always directs the user to consult a qualified ophthalmologist. This principle is enforced in code, not just documentation 
 ---
 
 ## What this project demonstrates
