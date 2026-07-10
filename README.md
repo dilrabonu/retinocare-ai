@@ -45,3 +45,50 @@ Claude API  ──►  grounded, cited recommendation
 │
 ▼
 Fail-closed disclaimer enforcement  ──►  final response (FastAPI / Streamlit)
+
+Full pipeline: `src/retinocare/` — classification (`models/`), retrieval + agent (`agents/`), API (`api/`).
+
+---
+
+## Model comparison — engineering decision, not just a leaderboard
+
+Three architectures were trained and evaluated identically on a held-out test set from [APTOS 2019](https://www.kaggle.com/c/aptos2019-blindness-detection):
+
+| Model            | Weighted F1 | Macro F1 | Severe F1 | Proliferative F1 | ECE (calibration) |
+|------------------|-------------|----------|-----------|-------------------|--------------------|
+| Baseline CNN (from scratch) | 0.6907 | 0.4780 | 0.2553 | 0.1587 | 0.0688 |
+| ResNet18 (transfer learning) | 0.7952 | 0.6265 | 0.3385 | 0.5333 | **0.0547** |
+| EfficientNet-B0 (transfer learning) | **0.8133** | **0.6550** | **0.4063** | **0.5517** | 0.0966 |
+
+**EfficientNet-B0 has the highest raw F1. ResNet18 was chosen for production anyway.**
+
+Why: the downstream RAG agent phrases its recommendation based on the model's confidence score (see the "moderate confidence" language in the demo above). Expected Calibration Error (ECE) measures whether a stated confidence can actually be trusted — ResNet18's confidence scores are meaningfully more reliable (ECE 0.055 vs 0.097). A screening tool that says "90% confident" and is wrong more than 10% of the time is a worse foundation than a slightly less accurate model whose confidence numbers mean what they say.
+
+This trade-off — and the reasoning behind it — is documented in full in [`docs/model_comparison_results.md`](docs/model_comparison_results.md), along with individual training writeups for each model in `docs/results_*.md`.
+
+---
+
+## Safety design
+
+This isn't a bolt-on disclaimer — it's enforced in code and covered by tests:
+
+- **Fail-closed disclaimer**: `RAGAgent.respond()` checks whether the LLM's output includes the exact required disclaimer text. If it's missing for any reason, the code appends it before returning — the safety guarantee never depends solely on the LLM remembering. Verified by `tests/test_agent.py::test_agent_response_always_includes_disclaimer`.
+- **Grounded, cited responses**: the system prompt explicitly forbids fabricating clinical information beyond what was retrieved from `knowledge_base/guidelines/`, and every recommendation cites its source document.
+- **Explicit uncertainty language**: the agent is prompted to reflect the model's actual confidence level rather than presenting every prediction with uniform authority.
+
+---
+
+## Tech stack
+
+| Layer | Technology |
+|---|---|
+| Modeling | PyTorch, torchvision, albumentations |
+| Serving | FastAPI, Streamlit |
+| Retrieval | ChromaDB (dense) + BM25 (sparse), Reciprocal Rank Fusion |
+| Agent / LLM | Anthropic Claude API |
+| Testing | pytest (10 tests: dataset integrity, agent safety, API behavior) |
+| Infra | Docker, GitHub Actions CI |
+
+---
+
+## Repository structure
