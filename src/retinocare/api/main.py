@@ -8,9 +8,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from fastapi import FastAPI
+from fastapi import FastAPI  # noqa: E402
 
-from src.retinocare.api.routes import router
+from src.retinocare.api.routes import router  # noqa: E402
 
 app = FastAPI(
     title="RetinoCare AI",
